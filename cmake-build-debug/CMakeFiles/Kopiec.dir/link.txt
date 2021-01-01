@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Kopiec.dir/objects.a
+C:\CLion\mingw64\bin\ar.exe cr CMakeFiles\Kopiec.dir/objects.a @CMakeFiles\Kopiec.dir\objects1.rsp
+C:\CLion\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\Kopiec.dir/objects.a -Wl,--no-whole-archive  -o Kopiec.exe -Wl,--out-implib,libKopiec.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Kopiec.dir\linklibs.rsp

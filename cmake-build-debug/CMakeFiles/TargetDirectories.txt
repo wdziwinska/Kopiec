@@ -1,0 +1,3 @@
+C:/CLionProjects/Als/Kopiec/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/CLionProjects/Als/Kopiec/cmake-build-debug/CMakeFiles/Kopiec.dir
+C:/CLionProjects/Als/Kopiec/cmake-build-debug/CMakeFiles/rebuild_cache.dir
