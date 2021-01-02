@@ -212,7 +212,6 @@ Kopiec * szukajWezelPP (Kopiec *&root, int wartosc ){
     }
 }
 
-
 // Funkcja szuka w drzewie BST węzła o zadanym kluczu. Jeśli go znajdzie, zwraca jego wskazanie. Jeżeli nie, to zwraca wskazanie puste.
 Kopiec * szukajOstataniL (Kopiec *&root, int wartosc ){
 
@@ -359,53 +358,6 @@ void usuwanieWezlaPoWartosc(Kopiec *&root, int wartosc, int ostatniElement){
     }
 }
 
-//// funkcja usuwa wybrany wezel
-//void usuwanieWezlaPoWartosc(Kopiec *&root, int wartosc){
-//    Kopiec *tmp;
-//    tmp=szukajWezel(root,wartosc);
-//    if(root!=NULL){
-//        //jesli ma dwoje dzieci
-//        if(tmp->left!=NULL && tmp->right!=NULL && tmp->left && tmp->right){
-//            if(tmp->left->liczba<=tmp->right->liczba){
-//                cout<<"Najwieksze dziecko to: "<<tmp->right->liczba<<endl;
-//                tmp->liczba=tmp->right->liczba;
-////                tmp->right->liczba=NULL;
-//                usuwanieWezlaPoWartosc(tmp->right,tmp->right->liczba);
-//                delete tmp->right;
-//                tmp->right=NULL;
-//            }
-//            else{
-//                cout<<"Najwieksze dziecko to: "<<tmp->left->liczba<<endl;
-//                tmp->liczba=tmp->left->liczba;
-////                tmp->left->liczba=NULL;
-//                usuwanieWezlaPoWartosc(tmp->left,tmp->left->liczba);
-//                delete tmp->left;
-//                tmp->left=NULL;
-//            }
-//        }
-//            //jesli ma jedno dziecko albo nie ma dziecka
-//        else{
-//            if(tmp->right == NULL && tmp->left == NULL){
-//                delete tmp;
-//                tmp->liczba=NULL;
-//            }
-//            //jesli nie ma lewego dziecka
-//            else if(tmp->left == NULL){
-//                tmp=tmp->right;
-//                delete tmp->right;
-//                tmp->right=NULL;
-//            }
-//                //jesli nie ma prawego dziecka
-//            else if(tmp->right == NULL) {
-//                tmp = tmp->left;
-//                delete tmp->left;
-//                tmp->left=NULL;
-//            }
-//        }
-//
-//    }
-//}
-
 void inOrder (Kopiec *&root){
     if(root){
         inOrder(root->left);
@@ -427,6 +379,78 @@ void preOrder (Kopiec *&liczba){
         cout<<liczba->liczba<<",";
         preOrder(liczba->left);
         preOrder(liczba->right);
+    }
+}
+
+//funkcja oblicza wysokosc drzewa
+int height(Kopiec* wezel){
+
+    if ( !wezel ) {
+        return 0;
+    }
+    return 1 + max( height( wezel->left ), height( wezel->right ) );
+}
+
+//funkcja dodaje do tablic wyjsciowych kolejne wezel, odleglosci i ukosniki
+void rysujWezel( string wyjscie[], string polaczenieWyzej[], Kopiec* wezel, int level, int rozmiar, char polaczenieZnak){
+
+    //sprawdzenie czy drzewo nie jest puste, jesli jest to funkcja sie konczy
+    if (!wezel) {
+        return;
+    }
+
+    rozmiar = max( rozmiar, 0 );
+
+    // zapelnia wszystko po lewej stronie
+    if ( wezel->left ){
+        //wywolanie rekurencyjne funkcji rysujWezel
+        rysujWezel( wyjscie, polaczenieWyzej, wezel->left, level + 1, rozmiar - to_string( wezel->left->liczba ).size() - 2, '/');
+        //ustalenie, ktora z podanych liczb jest wieksza i zapisanie jej do zmiennej rozmiar
+        rozmiar = max( rozmiar, (int)wyjscie[level+1].size() );
+    }
+
+    int space = rozmiar - wyjscie[level].size();
+
+    if ( space > 0 ){
+        //dodanie spacji, czyli odleglosci pomiedzy wezlami
+        wyjscie[level] += string( space, ' ' );
+    }
+    //zapisanie do tablicy wyjscie dwoch znakow odstepu oraz aktualnego wezla w postaci stringa
+    wyjscie[level] += ' ' + to_string( wezel->liczba) + ' ';
+
+    //warunek sprawdzajacy czy ukosnik zostal juz dodany
+    if ( polaczenieZnak == '/' ) {
+        rozmiar = wyjscie[level].size() - 1;
+    }
+    //ustalenie wolnej przestrzeni
+    space = rozmiar - polaczenieWyzej[level].size();
+
+    if ( space > 0 ){
+        //dodanie do tablicy polaczenieWyzej odstepow
+        polaczenieWyzej[level] += string( space, ' ' );
+    }
+    //dodanie ukosnika
+    polaczenieWyzej[level] += polaczenieZnak;
+
+    // uzuepelnia po prawej stronie
+    rozmiar = wyjscie[level].size();
+    rysujWezel( wyjscie, polaczenieWyzej, wezel->right, level + 1, rozmiar, '\\');
+}
+
+//funkcja wyswietla w konsoli drzewo
+void draw(Kopiec *&root){
+
+    int h = height( root );
+    string wyjscie[h];
+    string polaczeniePowyzej[h];
+
+    rysujWezel( wyjscie, polaczeniePowyzej, root, 0, 0, ' ');
+
+    for (int i = 0; i < h; i++){
+        if (i){
+            cout << polaczeniePowyzej[i] << '\n';
+        }
+        cout << wyjscie[i] << '\n';
     }
 }
 
@@ -479,6 +503,8 @@ int main() {
     cin>>usuwany;
     usuwanieWezlaPoWartosc(root, usuwany, ostatniElement);
     inOrder(root);
+    cout<<endl<<endl;
+    draw(root);
 
     return 0;
 }
