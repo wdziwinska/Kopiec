@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <math.h>
 
 using namespace std;
 
@@ -454,6 +455,115 @@ void draw(Kopiec *&root){
     }
 }
 
+//funkcja dodajaca elementy drzewa do tablicy
+void dodajDoTablicy(Kopiec *&root, int *tablicaWezlow){
+    Kopiec* lewo=NULL;
+    Kopiec* prawo=NULL;
+    lewo=root;
+    prawo=root;
+    int i=0;
+
+    //dodanie korzenia do tablicy
+    tablicaWezlow[i]=root->liczba;
+    i++;
+
+    if (lewo->left != NULL) {
+        tablicaWezlow[i] = lewo->left->liczba;
+        i++;
+    }
+    if (prawo->right != NULL) {
+        tablicaWezlow[i] = prawo->right->liczba;
+        i++;
+    }
+    while(lewo->liczba!=NULL || prawo->liczba!=NULL) {
+
+        if (lewo->left != NULL && lewo->left->left != NULL) {
+            tablicaWezlow[i] = lewo->left->left->liczba;
+            i++;
+        }
+        if (lewo->left != NULL && lewo->left->right != NULL) {
+            tablicaWezlow[i] = lewo->left->right->liczba;
+            i++;
+        }
+        if (lewo->left!= NULL && lewo->left->right != NULL && lewo->left->left != NULL ||
+            lewo->left!= NULL && lewo->left->right == NULL && lewo->left->left != NULL ||
+            lewo->left!= NULL && lewo->left->right != NULL && lewo->left->left == NULL){
+            lewo = lewo->left;
+        }
+
+        if (prawo->right != NULL && prawo->right->left != NULL) {
+            tablicaWezlow[i] = prawo->right->left->liczba;
+            i++;
+        }
+        if (prawo->right != NULL && prawo->right->right != NULL) {
+            tablicaWezlow[i] = prawo->right->right->liczba;
+            i++;
+        }
+        if (prawo->right!=NULL &&prawo->right->left != NULL && prawo->right->right != NULL ||
+            prawo->right!=NULL && prawo->right->left == NULL && prawo->right->right != NULL ||
+            prawo->right!=NULL && prawo->right->left != NULL && prawo->right->right == NULL) {
+            prawo = prawo->right;   //przesuniecie o jeden poziom nizej
+        }
+        else {
+            if (lewo->left==NULL || lewo->left->right == NULL && lewo->left->left == NULL) {
+                break;
+            }
+        }
+        if (lewo->right != NULL && lewo->right->right != NULL) {
+            tablicaWezlow[i] = lewo->right->right->liczba;
+            i++;
+        }
+        if (lewo->right != NULL && lewo->right->left != NULL) {
+            tablicaWezlow[i] = lewo->right->left->liczba;
+            i++;
+        }
+        if (lewo->left != NULL && lewo->left->left != NULL) {
+            tablicaWezlow[i] = lewo->left->left->liczba;
+            i++;
+        }
+        if (lewo->left != NULL && lewo->left->right != NULL) {
+            tablicaWezlow[i] = lewo->left->right->liczba;
+            i++;
+        }
+        if (prawo->left != NULL && prawo->left->right != NULL) {
+            tablicaWezlow[i] = prawo->left->right->liczba;
+            i++;
+        }
+        if (prawo->left != NULL && prawo->left->left != NULL) {
+            tablicaWezlow[i] = prawo->left->left->liczba;
+            i++;
+        }
+
+    }
+}
+
+void zapisDoPliku(int *tablicaWezlow){
+    fstream plik;
+    plik.open("wy.txt", ios::out);
+    int wartoscPliku=tablicaWezlow[0];
+    int i=1;
+    int k=1;
+    int liczaElementow=1;
+    cout<<endl;
+    if(!plik.good()){
+        cout<<"Nie uzyskano dostepu do pliku"<<endl;
+    }
+    else{
+        do{
+            //sprawdzenie czy w danym poziomie wszytskie wezly juz zostaly zapisane
+            if(liczaElementow==pow(2,k)) {
+                k++;
+                plik<<endl;
+            }
+            plik<<wartoscPliku<<",";
+            wartoscPliku=tablicaWezlow[i];
+            liczaElementow++;
+            i++;
+        }
+        while(wartoscPliku!=NULL);
+    }
+}
+
 int main() {
 
     int liczba;
@@ -503,8 +613,13 @@ int main() {
     cin>>usuwany;
     usuwanieWezlaPoWartosc(root, usuwany, ostatniElement);
     inOrder(root);
+
+    int tablicaWezlow[ileLiczb];
+    dodajDoTablicy(root, tablicaWezlow);
+
     cout<<endl<<endl;
     draw(root);
+    zapisDoPliku(tablicaWezlow);
 
     return 0;
 }
