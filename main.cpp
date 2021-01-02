@@ -433,17 +433,22 @@ void rysujWezel( string wyjscie[], string polaczenieWyzej[], Kopiec* wezel, int 
 //funkcja wyswietla w konsoli drzewo
 void draw(Kopiec *&root){
 
-    int h = height( root );
-    string wyjscie[h];
-    string polaczeniePowyzej[h];
+    if(root!=NULL) {
+        int h = height(root);
+        string wyjscie[h];
+        string polaczeniePowyzej[h];
 
-    rysujWezel( wyjscie, polaczeniePowyzej, root, 0, 0, ' ');
+        rysujWezel(wyjscie, polaczeniePowyzej, root, 0, 0, ' ');
 
-    for (int i = 0; i < h; i++){
-        if (i){
-            cout << polaczeniePowyzej[i] << '\n';
+        for (int i = 0; i < h; i++) {
+            if (i) {
+                cout << polaczeniePowyzej[i] << '\n';
+            }
+            cout << wyjscie[i] << '\n';
         }
-        cout << wyjscie[i] << '\n';
+    }
+    else{
+        cout<<"Kopiec jest pusty"<<endl;
     }
 }
 
@@ -556,6 +561,65 @@ void zapisDoPliku(int *tablicaWezlow){
     }
 }
 
+void usuwanieDrzewaLL(Kopiec *root){
+    if(root){
+        if(root->left!=NULL && root->left->left!=NULL) {
+            usuwanieDrzewaLL(root->left->left);
+        }
+//        delete root;
+        root->liczba=NULL;
+    }
+}
+void usuwanieDrzewaLP(Kopiec *root){
+    if(root){
+        if(root->left!=NULL && root->left->right!=NULL) {
+            usuwanieDrzewaLP(root->left->right);
+        }
+//        delete root;
+        root->liczba=NULL;
+    }
+}
+
+void usuwanieDrzewaPL(Kopiec *root){
+    if(root){
+        if(root->right!=NULL && root->right->left!=NULL) {
+            usuwanieDrzewaLL(root->right->left);
+        }
+//        delete root;
+        root->liczba=NULL;
+    }
+}
+void usuwanieDrzewaPP(Kopiec *root){
+    if(root){
+        if(root->right!=NULL && root->right->right!=NULL) {
+            usuwanieDrzewaLL(root->right->right);
+        }
+//        delete root;
+        root->liczba=NULL;
+    }
+}
+
+//funkcja usuwa Kopiec
+void usuwanieDrzewaL(Kopiec *root){
+    if(root){
+        if(root->left!=NULL) {
+            usuwanieDrzewaL(root->left);
+        }
+//        delete root;
+        root->liczba=NULL;
+    }
+}
+
+void usuwanieDrzewaP(Kopiec *root){
+    if(root){
+        if(root->right!=NULL) {
+            usuwanieDrzewaP(root->right);
+        }
+        root->liczba=NULL;
+        root=NULL;
+    }
+}
+
 int main() {
 
     int liczba;
@@ -566,6 +630,7 @@ int main() {
     int i=1;
     int ostatniElement, poprzedniElement;
     int wyborKolejnosciWyswietlania;
+    char czyUsunac;
 
     cout<<"Wybierz sposob wczytania danych"<<endl<<"\"k\"-klawiatura, \"p\"-plik"<<endl;
     cin>>wybor;
@@ -579,6 +644,7 @@ int main() {
                 insert(root, liczba, i);
                 ostatniElement=liczba;
             }
+            draw(root);
             break;
         case 'p':
             fstream plik;
@@ -596,6 +662,7 @@ int main() {
                 }
                 plik.close();
             }
+            draw(root);
             break;
     }
     cout<<"Nacisnij:"<<endl<<"\"d\" jesli chcesz dodac wezel"<<endl<<
@@ -622,8 +689,8 @@ int main() {
         default:
             cout<<"Podano nieprawidlowa wartosc"<<endl;
     }
-    cout<<"Wybierz co chcesz zrobic: "<<endl<<"\"r\"-rysowanie drzewa, \"w\"-wypisanie wezlow w kolejnosci przechodzenia,"<<endl<<
-        "\"u\"-usuniecie drzewa, \"q\"-wyjscie"<<endl;
+    cout<<"Wybierz co chcesz zrobic: "<<endl<<"\"r\"-rysowanie drzewa"<<endl<<"\"w\"-wypisanie wezlow w kolejnosci przechodzenia,"<<endl<<
+        "\"q\"-wyjscie"<<endl;
     cin>>wybor;
 
     switch (wybor) {
@@ -647,9 +714,6 @@ int main() {
                 break;
             }
             break;
-//        case 'u':
-//            usuwanieDrzewa(root);
-//            break;
         case 'q':
             break;
         default:
@@ -657,6 +721,18 @@ int main() {
     }
     int tablicaWezlow[ileLiczb];
     dodajDoTablicy(root, tablicaWezlow);
+
+    cout<<"Czy chcesz usunac Kopiec?"<<endl<<"\"t\" - Tak, \"n\" - Nie ";
+    cin>>czyUsunac;
+
+    switch(czyUsunac){
+        case 't':
+              root=NULL;
+            break;
+        case 'n':
+            break;
+    }
+    draw(root);
 
     zapisDoPliku(tablicaWezlow);
 
