@@ -90,7 +90,7 @@ void insert(Kopiec *&root, int liczba, int i) {
             else{
                 insert(root->right->right, liczba, i);
                 if (root->right->right->liczba > root->right->liczba) {
-                    swap(root->left->right->liczba, root->right->liczba);
+                    swap(root->right->right->liczba, root->right->liczba);
                 }
             }
             if (root->right->liczba > root->liczba) {
@@ -100,17 +100,6 @@ void insert(Kopiec *&root, int liczba, int i) {
     }
 }
 
-//void show(Kopiec *root){
-//    Kopiec *tmp = root;
-//
-//    cout<<"wyswietlanie"<<endl;
-//    while(tmp->liczba!=NULL){
-////        if(tmp->left!=NULL){
-//            cout<<tmp->liczba<<endl;
-//            tmp=tmp->left;
-////        }
-//    }
-//}
 //funkcja znajduje najwieksza wartosc
 Kopiec* znajdzNajwiekszy(Kopiec* lewy, Kopiec* prawy){
     if(lewy->liczba<=prawy->liczba){
@@ -126,7 +115,7 @@ Kopiec * szukajWezelL (Kopiec *&root, int wartosc ){
 
     if(root){
         if(wartosc == root->liczba){
-            cout<<"Znaleziono w L"<<endl;
+//            cout<<"Znaleziono w L"<<endl;
             return root;
         }
         else if(root->left!=NULL && root->left && wartosc != root->liczba){
@@ -141,7 +130,7 @@ Kopiec * szukajWezelL (Kopiec *&root, int wartosc ){
 Kopiec * szukajWezelP (Kopiec *&root, int wartosc ){
     if(root){
         if(wartosc == root->liczba){
-            cout<<"Znaleziono w P"<<endl;
+//            cout<<"Znaleziono w P"<<endl;
             return root;
         }
         else if(root->right!=NULL && wartosc != root->liczba){
@@ -156,7 +145,7 @@ Kopiec * szukajWezelP (Kopiec *&root, int wartosc ){
 Kopiec * szukajWezelLL (Kopiec *&root, int wartosc ){
     if(root){
         if(root!=NULL && wartosc == root->liczba){
-            cout<<"Znaleziono w LL"<<endl;
+//            cout<<"Znaleziono w LL"<<endl;
             return root;
         }
         else if(root->left!=NULL && root->left->left!=NULL && wartosc != root->left->liczba){
@@ -171,7 +160,7 @@ Kopiec * szukajWezelLL (Kopiec *&root, int wartosc ){
 Kopiec * szukajWezelLP (Kopiec *&root, int wartosc ){
     if(root){
         if(root!=NULL && wartosc == root->liczba){
-            cout<<"Znaleziono w LP"<<endl;
+//            cout<<"Znaleziono w LP"<<endl;
             return root;
         }
         else if(root->left!=NULL && root->left->right!=NULL && wartosc != root->left->liczba){
@@ -186,7 +175,7 @@ Kopiec * szukajWezelLP (Kopiec *&root, int wartosc ){
 Kopiec * szukajWezelPL (Kopiec *&root, int wartosc ){
     if(root){
         if(root!=NULL && wartosc == root->liczba){
-            cout<<"Znaleziono w PL"<<endl;
+//            cout<<"Znaleziono w PL"<<endl;
             return root;
         }
         else if( root->right!=NULL && root->right->left!=NULL && wartosc != root->right->liczba){
@@ -201,7 +190,7 @@ Kopiec * szukajWezelPL (Kopiec *&root, int wartosc ){
 Kopiec * szukajWezelPP (Kopiec *&root, int wartosc ){
     if(root){
         if(root!=NULL && wartosc == root->liczba){
-            cout<<"Znaleziono w PP"<<endl;
+//            cout<<"Znaleziono w PP"<<endl;
             return root;
         }
         else if(root->right!=NULL && root->right->right!=NULL && wartosc != root->right->liczba){
@@ -218,7 +207,7 @@ Kopiec * szukajOstataniL (Kopiec *&root, int wartosc ){
 
     if(root){
         if(wartosc == root->liczba){
-            cout<<"Usuwam L "<<endl;
+//            cout<<"Usuwam L "<<endl;
             delete root;
             root=NULL;
         }
@@ -234,7 +223,7 @@ Kopiec * szukajOstataniL (Kopiec *&root, int wartosc ){
 Kopiec * szukajOstatniP (Kopiec *&root, int wartosc ){
     if(root){
         if(wartosc == root->liczba){
-            cout<<"Usuwam P "<<endl;
+//            cout<<"Usuwam P "<<endl;
             delete root;
             root=NULL;        }
         else if(root->right!=NULL && wartosc != root->liczba){
@@ -249,7 +238,7 @@ Kopiec * szukajOstatniP (Kopiec *&root, int wartosc ){
 Kopiec * szukajOstatniLL (Kopiec *&root, int wartosc ){
     if(root){
         if(root!=NULL && wartosc == root->liczba){
-            cout<<"Usuwam LL "<<endl;
+//            cout<<"Usuwam LL "<<endl;
             delete root;
             root=NULL;
         }
@@ -265,7 +254,7 @@ Kopiec * szukajOstatniLL (Kopiec *&root, int wartosc ){
 Kopiec * szukajOstatniLP (Kopiec *&root, int wartosc ){
     if(root){
         if(root!=NULL && wartosc == root->liczba){
-            cout<<"Usuwam LP "<<endl;
+//            cout<<"Usuwam LP "<<endl;
             delete root;
             root=NULL;
         }
@@ -281,7 +270,7 @@ Kopiec * szukajOstatniLP (Kopiec *&root, int wartosc ){
 Kopiec * szukajOstatniPL (Kopiec *&root, int wartosc ){
     if(root){
         if(root!=NULL && wartosc == root->liczba){
-            cout<<"Usuwam PL "<<endl;
+//            cout<<"Usuwam PL "<<endl;
             delete root;
             root=NULL;
         }
@@ -297,7 +286,7 @@ Kopiec * szukajOstatniPL (Kopiec *&root, int wartosc ){
 Kopiec * szukajOstatniPP (Kopiec *&root, int wartosc ){
     if(root){
         if(root!=NULL && wartosc == root->liczba){
-            cout<<"Usuwam PP "<<endl;
+//            cout<<"Usuwam PP "<<endl;
             delete root;
             root=NULL;
         }
@@ -329,6 +318,9 @@ void usuwanieWezlaPoWartosc(Kopiec *&root, int wartosc, int ostatniElement){
         }
         if (tmp == NULL) {
             tmp = szukajWezelPP(root, wartosc);
+        }
+        if(tmp==NULL){
+            cout<<"Nie znaleziono wezla"<<endl;
         }
         szukajOstataniL(root, ostatniElement);
         szukajOstatniP(root, ostatniElement);
@@ -573,6 +565,7 @@ int main() {
     int ileLiczb;
     int i=1;
     int ostatniElement, poprzedniElement;
+    int wyborKolejnosciWyswietlania;
 
     cout<<"Wybierz sposob wczytania danych"<<endl<<"\"k\"-klawiatura, \"p\"-plik"<<endl;
     cin>>wybor;
@@ -586,7 +579,6 @@ int main() {
                 insert(root, liczba, i);
                 ostatniElement=liczba;
             }
-            cout<<endl<<endl;
             break;
         case 'p':
             fstream plik;
@@ -606,19 +598,66 @@ int main() {
             }
             break;
     }
-    cout<<"ostatni element " <<ostatniElement<<endl;
+    cout<<"Nacisnij:"<<endl<<"\"d\" jesli chcesz dodac wezel"<<endl<<
+                    "\"u\" jesli chcesz usuanc wezel"<<endl<<
+                    "\"q\" jesli zadne z powyzszych"<<endl;
+    cin>>wybor;
+    switch (wybor) {
+        case 'd':
+            cout<<"Wprowadz liczbe"<<endl;
+            cin>>liczba;
+            insert(root, liczba, i);
+            ileLiczb=i;
+            i++;
+            ostatniElement=liczba;
+            break;
+        case 'u':
+            cout<<"Wprowadz numer wezla, ktory chcesz usunac";
+            cin>>usuwany;
+            usuwanieWezlaPoWartosc(root, usuwany, ostatniElement);
+            ileLiczb--;
+            break;
+        case 'q':
+            break;
+        default:
+            cout<<"Podano nieprawidlowa wartosc"<<endl;
+    }
+    cout<<"Wybierz co chcesz zrobic: "<<endl<<"\"r\"-rysowanie drzewa, \"w\"-wypisanie wezlow w kolejnosci przechodzenia,"<<endl<<
+        "\"u\"-usuniecie drzewa, \"q\"-wyjscie"<<endl;
+    cin>>wybor;
 
-    inOrder(root);
-    cout<<endl<<"Wprowadz numer wezla, ktory chcesz usunac"<<endl;
-    cin>>usuwany;
-    usuwanieWezlaPoWartosc(root, usuwany, ostatniElement);
-    inOrder(root);
-
+    switch (wybor) {
+        case 'r':
+            draw(root);
+            break;
+        case 'w':
+            cout << "Wybierz w jakiej kolejnosci maja zostac wypisane wezly" << endl
+                 << "\"1\"-VLR, \"2\"-LVR, \"3\"-LRV"<<"  ";
+            cin >> wyborKolejnosciWyswietlania;
+            if (wyborKolejnosciWyswietlania == 1) {
+                preOrder(root);
+                break;
+            }
+            if (wyborKolejnosciWyswietlania == 2) {
+                inOrder(root);
+                break;
+            }
+            if (wyborKolejnosciWyswietlania == 3) {
+                postOrder(root);
+                break;
+            }
+            break;
+//        case 'u':
+//            usuwanieDrzewa(root);
+//            break;
+        case 'q':
+            break;
+        default:
+            cout << "Podano nieprawidlowa wartosc" << endl;
+    }
     int tablicaWezlow[ileLiczb];
     dodajDoTablicy(root, tablicaWezlow);
 
-    cout<<endl<<endl;
-    draw(root);
     zapisDoPliku(tablicaWezlow);
 
     return 0;
